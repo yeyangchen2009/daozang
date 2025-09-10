@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>道藏 - 中华道教经典数字图书馆</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="道藏 - 中华道教经典数字图书馆，包含正统道藏各部、续道藏、藏外等丰富道教文献">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <!-- 网站图标 -->
+  <link rel="icon" type="image/jpeg" href="_media/favicon.jpg">
+  <link rel="shortcut icon" type="image/jpeg" href="_media/favicon.jpg">
+  <link rel="apple-touch-icon" href="_media/favicon.jpg">
+  <meta name="msapplication-TileImage" content="_media/favicon.jpg">
+  <!-- Docsify 主题样式 -->
+  <link rel="stylesheet" href="lib/pure.css">
+  
+  <!-- 自定义样式 -->
+  <style>
+    .app-name-link img {
+      width: 30px;
+      height: 30px;
+    }
+    
+    /* 固定侧边栏 */
+    .sidebar {
+      border-right: 1px solid #eee;
+      position: fixed !important;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      padding-top: 0; /* 移除为固定导航栏留出的空间 */
+    }
+    
+    /* 移除导航栏固定样式 */
+    /* .navbar {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: white;
+      border-bottom: 1px solid #eee;
+    } */    
+   .content {
+      padding-top: 80px;
+    }    
+    .cover.show {
+      background: linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%, hsl(181, 100%, 85%) 100%);
+    }
+    .cover-main > p:last-child a {
+      color: #fff;
+      background: rgba(0, 0, 0, 0.1);
+      border: 1px solid #fff;
+    }
+    
+    .cover-main > p:last-child a:hover {
+      background: #fff;
+      color: #42b883;
+    }
+    
+    /* 回到顶部按钮样式 */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: #42b883;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      z-index: 99;
+      font-size: 20px;
+      text-align: center;
+      line-height: 40px;
+    }
+    
+    #back-to-top:hover {
+      background-color: #359c6d;
+    }
+    
+    /* 调整侧边栏搜索框样式 */
+    .sidebar .search {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 100;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      margin: 0;
+    }
+    
+    /* 确保侧边栏内容不被搜索框遮挡 */
+    .sidebar-nav {
+      padding-top: 0;
+      margin-top: 0;
+    }
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div style="text-align: center; padding: 50px;">
+      <h1>📚 道藏载入中...</h1>
+      <p>正在准备中华道教经典文献，请稍候...</p>
+    </div>
+  </div>
+  
+  <!-- 回到顶部按钮 -->
+  <button id="back-to-top" title="回到顶部">↑</button>
+  
+  <script>
+    // 回到顶部功能
+    window.onscroll = function() {
+      scrollFunction();
+    };
+    
+    function scrollFunction() {
+      const backToTopButton = document.getElementById("back-to-top");
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        backToTopButton.style.display = "block";
+      } else {
+        backToTopButton.style.display = "none";
+      }
+    };
+    
+    document.getElementById("back-to-top").addEventListener("click", function() {
+      document.body.scrollTop = 0; // Safari
+      document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
+    });
+    
+    window.$docsify = {
+      el: '#app', /* docsify初始化的挂载元素，默认#app,不存在则挂载在body上 */
+      // 网站名称
+      name: '道藏',
+      // 首页文件
+      homepage: '/README.md',
+      // 最大目录层级
+      maxLevel: 6,
+      // 子目录层级
+      subMaxLevel: 6,
+      // 载入侧边栏
+      loadSidebar: true,
+      // 固定侧边栏
+      sidebarDisplayLevel: 1,
+      // 自动生成侧边栏
+      autoHeader: true,
+      // 载入导航栏
+      loadNavbar: true,
+      // 封面页面
+      coverpage: true,
+      // 首页是否只显示封面
+      onlyCover: true,
+      // 主题颜色
+      themeColor: '#42b883',
+      // 路由模式
+      routerMode: 'hash',
+      // 编码处理
+      charset: 'utf-8',
+      // 别名处理
+      alias: {
+        '/.*/_navbar.md': '/_navbar.md',
+        '/.*/_coverpage.md': '/_coverpage.md'
+      },
+      // 搜索配置
+      search: {
+        maxAge: 86400000, // 过期时间，单位毫秒，一天
+        paths: 'auto',
+        placeholder: '🔍 搜索道教文献...',
+        noData: '😥 找不到结果',
+        depth: 6,
+        hideOtherSidebarContent: false,
+      },
+      // 复制代码配置
+      copyCode: {
+        buttonText: '复制',
+        errorText: '错误',
+        successText: '已复制'
+      },
+      // 分页导航
+      pagination: {
+        previousText: '上一篇',
+        nextText: '下一篇',
+        crossChapter: true,
+        crossChapterText: true,
+        crossChapterAnchor: true
+      },
+      // 自定义插件
+      plugins: [
+        // 编辑按钮和页脚插件
+        function (hook, vm) {
+          hook.afterEach(function (html) {
+            var footer = 
+              '<div style="text-align: center; padding: 20px; color: #666; border-top: 1px solid #eee; margin-top: 40px;">\n' +
+              '<p>📚 <strong>道藏 - 中华道教经典数字图书馆</strong> | 🕉 <em>传承道教文化，弘扬道家智慧</em></p>\n' +
+              '<p style="font-size: 0.9em;">最后更新: ' + new Date().toLocaleDateString('zh-CN') + 
+              ' | <a href="https://github.com/yeyangchen2009" target="_blank">GitHub</a>' +
+              ' | <a href="#/guide">使用指南</a></p>\n' +
+              '</div>';
+            return html + footer;
+          });
+        }
+      ]
+    }
+  </script>
+  
+  <!-- Docsify 核心文件 -->
+  <script src="lib/docsify@4.js"></script>
+  
+  <!-- 搜索插件 -->
+  <script src="lib/search.min.js"></script>
+  
+  <!-- 复制代码插件 -->
+  <script src="lib/docsify-copy-code@2.js"></script>
+  
+  <!-- 分页插件 -->
+  <script src="lib/docsify-pagination.min.js"></script>
+  
+  <!-- 缩放图片插件 -->
+  <script src="lib/zoom-image.min.js"></script>
+  
+  <!-- Emoji 插件 -->
+  <script src="lib/emoji.min.js"></script>
+</body>
+</html>
