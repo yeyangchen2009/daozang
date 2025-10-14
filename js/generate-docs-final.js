@@ -25,8 +25,10 @@ const path = require('path');
 const config = {
   // 要忽略的文件名列表
   ignoreFiles: ['_sidebar.md', 'README.md', '_navbar.md', '_coverpage.md'],
+  // 要忽略的目录名列表
+  ignoreDirs: ['.git', 'node_modules', '.vscode', '.idea', 'dist', 'build','_media','js','lib'],
   // 指定的路径名称（可以通过命令行参数传入）
-  specifiedPath: process.argv[3] || '艺藏',
+  specifiedPath: process.argv[3] || '佛藏',
   // 缩进字符
   indentChar: '  ',
   // 字符编码设置
@@ -173,6 +175,10 @@ function getDirectoryStructure(dir, depth = 0) {
     const stat = fs.statSync(fullPath);
     
     if (stat && stat.isDirectory()) {
+      // 检查目录是否在忽略列表中
+      if (config.ignoreDirs.includes(file)) {
+        return;
+      }
       directories.push(file);
     } else if (path.extname(file) === '.md') {
       files.push(file);
@@ -270,20 +276,23 @@ function generateRootReadmeContent(structure, basePath) {
   }
   
   content += '\n---\n\n';
-  content += '> 本README文件由系统自动生成，请勿手动修改。\n---';
+  content += '> 本README文件由系统自动生成，请勿手动修改。';
+  content += '\n---\n';  
   content += '**📞 聯繫資訊**\n\n';
+  content += '\n\n';  
   content += '如有任何問題或建議，歡迎通過以下方式聯繫：\n\n';
   content += '- 📧 微信: yeyang0802\n';
   content += '- 🐙 GitHub: [@yeyangchen2009](https://github.com/yeyangchen2009)\n\n';
   content += '![](/_media/lxfs.jpg)\n';
+  content += '\n\n';    
   content += '**📄 版權聲明**\n\n';
   content += '本項目僅供學習和研究使用，如需商業用途請聯繫相關版權方。\n';
-  
+
   return content;
 }
 
 /**
- * 生成指定路径README内容（如"艺藏"目录）
+ * 生成指定路径README内容（如"佛藏"目录）
  * @param {Object} structure 目录结构
  * @param {string} basePath 基础路径
  * @returns {string} README内容
@@ -307,7 +316,8 @@ function generateSpecifiedPathReadmeContent(structure, basePath) {
   const totalSize = getDirectorySize(structure.path);
   const totalBookCount = countMarkdownFiles(structure.path);
   
-  content += `| ${structure.name} | ${totalBookCount} | ${totalWordCount} 字 | ${totalSize.formatted} |\n\n`;
+  // 修改这里：为"佛藏"名称添加超链接到根目录的README
+  content += `| [${structure.name}](/README.md) | ${totalBookCount} | ${totalWordCount} 字 | ${totalSize.formatted} |\n\n`;
   
   // 为每个子目录生成单独的表格
   const directories = structure.children.filter(item => item.type === 'directory');
@@ -316,16 +326,80 @@ function generateSpecifiedPathReadmeContent(structure, basePath) {
     content += '| 文件名称 | 预估字数 | 大小 |\n';
     content += '|----------|----------|------|\n';
     
-    // 获取子目录中的文件
+    // 检查子目录是否包含文件或子目录
     const subdirStructure = getDirectoryStructure(dir.path);
     const files = subdirStructure.children.filter(item => item.type === 'file');
+    const subdirs = subdirStructure.children.filter(item => item.type === 'directory');
+    
+    if (files.length > 0) {
+      // 如果子目录包含文件，显示文件列表
+      files.forEach(file => {
+        content += `| [${file.name}](${path.relative(basePath, file.path).replace(/\\/g, '/')}) | ${file.wordCount} 字 | ${file.formattedSize} |\n`;
+      });
+    } else if (subdirs.length > 0) {
+      // 如果子目录包含子目录但没有文件，显示总计信息并链接到子目录的README
+      const dirBookCount = countMarkdownFiles(dir.path);
+      const dirWordCount = estimateDirectoryWordCount(dir.path);
+      const dirSize = getDirectorySize(dir.path);
+      // 修改这里：添加链接到子目录README的条目
+      content += `| [总计：${dirBookCount} 部书](${path.relative(basePath, dir.path).replace(/\\/g, '/')}/README.md) | ${dirWordCount} 字 | ${dirSize.formatted} |\n`;
+    }
+    
+    content += '\n';
+  });
+  
+  content += '---\n\n';
+  content += '> 本README文件由系统自动生成，请勿手动修改。\n';
+  
+  return content;
+}
+
+/**
+ * 生成中间层目录README内容（具有统计信息的三列表格）
+ * @param {Object} structure 目录结构
+ * @param {string} basePath 基础路径
+ * @returns {string} README内容
+ */
+function generateIntermediateReadmeContent(structure, basePath) {
+  let content = `# ${structure.name}\n\n`;
+  
+  // 统计信息
+  const fileCount = structure.children.filter(item => item.type === 'file').length;
+  const dirCount = structure.children.filter(item => item.type === 'directory').length;
+  
+  content += `本目录包含 ${fileCount} 个文档文件和 ${dirCount} 个子目录。\n\n`;
+  
+  // 生成文件列表表格（添加文件名、预估字数、大小信息）
+  const files = structure.children.filter(item => item.type === 'file');
+  if (files.length > 0) {
+    content += '## 文件列表\n\n';
+    content += '| 文件名称 | 预估字数 | 大小 |\n';
+    content += '|---------|---------|------|\n';
     
     files.forEach(file => {
       content += `| [${file.name}](${path.relative(basePath, file.path).replace(/\\/g, '/')}) | ${file.wordCount} 字 | ${file.formattedSize} |\n`;
     });
     
     content += '\n';
-  });
+  }
+  
+  // 为每个子目录生成统计信息表格
+  const directories = structure.children.filter(item => item.type === 'directory');
+  if (directories.length > 0) {
+    content += '## 子目录统计\n\n';
+    content += '| 目录名称 | 书籍数 | 预估字数 | 大小 |\n';
+    content += '|---------|--------|----------|------|\n';
+    
+    directories.forEach(dir => {
+      const dirBookCount = countMarkdownFiles(dir.path);
+      const dirWordCount = estimateDirectoryWordCount(dir.path);
+      const dirSize = getDirectorySize(dir.path);
+      
+      content += `| [${dir.name}](${path.relative(basePath, dir.path).replace(/\\/g, '/')}/README.md) | ${dirBookCount} | ${dirWordCount} 字 | ${dirSize.formatted} |\n`;
+    });
+    
+    content += '\n';
+  }
   
   content += '---\n\n';
   content += '> 本README文件由系统自动生成，请勿手动修改。\n';
@@ -348,7 +422,7 @@ function generateNormalReadmeContent(structure, basePath) {
   
   content += `本目录包含 ${fileCount} 个文档文件和 ${dirCount} 个子目录。\n\n`;
   
-  // 如果有文件，生成文件列表表格
+  // 如果有文件，生成文件列表表格（添加文件名、预估字数、大小信息）
   const files = structure.children.filter(item => item.type === 'file');
   if (files.length > 0) {
     content += '## 文件列表\n\n';
@@ -368,7 +442,7 @@ function generateNormalReadmeContent(structure, basePath) {
     content += '## 子目录\n\n';
     
     directories.forEach(dir => {
-      content += `- [${dir.name}](${path.relative(basePath, dir.path).replace(/\\/g, '/')}/README.md)\n`;
+      content += `* [${dir.name}](${path.relative(basePath, dir.path).replace(/\\/g, '/')}/README.md)\n`;
     });
     
     content += '\n';
@@ -390,7 +464,7 @@ function generateRootSidebarContent(structure, basePath) {
   let content = '';
   
   // 根目录的readme作为首页
-  content += '* [首页](README.md)\n';
+  content += '* [首页](/README.md)\n';
   
   // 指定路径的readme
   const specifiedPathDir = structure.children.find(item => item.type === 'directory' && item.name === config.specifiedPath);
@@ -419,18 +493,51 @@ function generateRootSidebarContent(structure, basePath) {
 function generateSubdirSidebarContent(structure, basePath) {
   let content = '';
   
-  // 添加返回链接
-  content += '* [返回根目录](../README.md)\n';
-  content += '* [返回上一级](./README.md)\n';
+  // 计算相对路径以确定正确的返回链接
+  const relativePath = path.relative(basePath, structure.path).replace(/\\/g, '/');
+  const pathParts = relativePath.split('/');
+  
+  // 添加返回根目录链接（使用相对路径格式）
+  content += '* [返回根目录](/README.md)\n';
+  
+  // 生成返回上一级链接（使用相对路径格式）
+  if (pathParts.length <= 1) {
+    // 如果只有一层深度，返回上一级就是根目录
+    content += '* [返回上一级](/README.md)\n';
+  } else {
+    // 如果有多层深度，需要返回到上一级目录
+    const parentPath = pathParts.slice(0, -1).join('/');
+    content += `* [返回上一级](${parentPath}/README.md)\n`;
+  }
+  
+  // 添加完整路径名称链接到该文件夹下的README（使用相对路径格式）
+  if (relativePath) {
+    content += `* [${relativePath}](${relativePath}/README.md)\n`;
+  } else {
+    content += `* [${config.specifiedPath}](${config.specifiedPath}/README.md)\n`;
+  }
   
   content += '\n---\n\n';
   
   // 处理文件
   const files = structure.children.filter(item => item.type === 'file');
-  files.forEach(item => {
-    const relativePath = path.relative(basePath, item.path).replace(/\\/g, '/');
-    content += `* [${item.name}](${relativePath})\n`;
-  });
+  if (files.length > 0) {
+    files.forEach(item => {
+      const relativeFilePath = path.relative(basePath, item.path).replace(/\\/g, '/');
+      content += `* [${item.name}](${relativeFilePath})\n`;
+    });
+    
+    content += '\n';
+  }
+  
+  // 处理子目录（去掉"子目录"标题行）
+  const directories = structure.children.filter(item => item.type === 'directory');
+  if (directories.length > 0) {
+    directories.forEach(dir => {
+      const relativeDirPath = path.relative(basePath, dir.path).replace(/\\/g, '/');
+      content += `* [${dir.name}](${relativeDirPath}/README.md)\n`;
+    });
+  }
   
   return content;
 }
@@ -450,10 +557,13 @@ function generateDocs(structure, basePath, isRoot = false) {
     // 根目录
     readmeContent = generateRootReadmeContent(structure, basePath);
   } else if (structure.name === config.specifiedPath) {
-    // 指定路径目录（如"艺藏"）
+    // 指定路径目录（如"佛藏"）
     readmeContent = generateSpecifiedPathReadmeContent(structure, basePath);
+  } else if (structure.children.some(item => item.type === 'directory')) {
+    // 中间层目录（有子目录的目录）
+    readmeContent = generateIntermediateReadmeContent(structure, basePath);
   } else {
-    // 普通子目录
+    // 普通子目录（只有文件，没有子目录）
     readmeContent = generateNormalReadmeContent(structure, basePath);
   }
   
@@ -461,23 +571,24 @@ function generateDocs(structure, basePath, isRoot = false) {
   fs.writeFileSync(readmePath, readmeContent, config.encoding);
   console.log(`Created: ${readmePath}`);
   
-  // 生成侧边栏文件（指定路径不生成）
-  if (structure.name !== config.specifiedPath) {
-    console.log(`Generating sidebar for: ${structure.path}`);
-    let sidebarContent;
-    
-    if (isRoot) {
-      // 根目录
-      sidebarContent = generateRootSidebarContent(structure, basePath);
-    } else {
-      // 子目录
-      sidebarContent = generateSubdirSidebarContent(structure, basePath);
-    }
-    
-    const sidebarPath = path.resolve(structure.path, '_sidebar.md');
-    fs.writeFileSync(sidebarPath, sidebarContent, config.encoding);
-    console.log(`Created: ${sidebarPath}`);
+  // 生成侧边栏文件
+  console.log(`Generating sidebar for: ${structure.path}`);
+  let sidebarContent;
+  
+  if (isRoot) {
+    // 根目录
+    sidebarContent = generateRootSidebarContent(structure, basePath);
+  } else if (structure.name === config.specifiedPath) {
+    // 指定路径目录（如"佛藏"）
+    sidebarContent = generateSubdirSidebarContent(structure, basePath);
+  } else {
+    // 子目录
+    sidebarContent = generateSubdirSidebarContent(structure, basePath);
   }
+  
+  const sidebarPath = path.resolve(structure.path, '_sidebar.md');
+  fs.writeFileSync(sidebarPath, sidebarContent, config.encoding);
+  console.log(`Created: ${sidebarPath}`);
   
   // 递归处理子目录
   structure.children.forEach(item => {

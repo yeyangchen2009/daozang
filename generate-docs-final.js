@@ -25,6 +25,8 @@ const path = require('path');
 const config = {
   // 要忽略的文件名列表
   ignoreFiles: ['_sidebar.md', 'README.md', '_navbar.md', '_coverpage.md'],
+  // 要忽略的目录名列表
+  ignoreDirs: ['.git', 'node_modules', '.vscode', '.idea', 'dist', 'build','_media','js','lib'],
   // 指定的路径名称（可以通过命令行参数传入）
   specifiedPath: process.argv[3] || '佛藏',
   // 缩进字符
@@ -173,6 +175,10 @@ function getDirectoryStructure(dir, depth = 0) {
     const stat = fs.statSync(fullPath);
     
     if (stat && stat.isDirectory()) {
+      // 检查目录是否在忽略列表中
+      if (config.ignoreDirs.includes(file)) {
+        return;
+      }
       directories.push(file);
     } else if (path.extname(file) === '.md') {
       files.push(file);
@@ -363,17 +369,18 @@ function generateIntermediateReadmeContent(structure, basePath) {
   
   content += `本目录包含 ${fileCount} 个文档文件和 ${dirCount} 个子目录。\n\n`;
   
-  // 生成三列表格（名称、预估字数、大小）
-  // 计算整个目录的统计信息（包括子目录中的文件）
-  const totalWordCount = estimateDirectoryWordCount(structure.path);
-  const totalSize = getDirectorySize(structure.path);
-  
-  // 获取当前目录中的所有文件（包括子目录中的文件）
-  if (totalWordCount > 0 || totalSize.size > 0) {
+  // 生成文件列表表格（添加文件名、预估字数、大小信息）
+  const files = structure.children.filter(item => item.type === 'file');
+  if (files.length > 0) {
     content += '## 文件列表\n\n';
     content += '| 文件名称 | 预估字数 | 大小 |\n';
     content += '|---------|---------|------|\n';
-    content += `| 总计：${countMarkdownFiles(structure.path)} 部书 | ${totalWordCount} 字 | ${totalSize.formatted} |\n\n`;
+    
+    files.forEach(file => {
+      content += `| [${file.name}](${path.relative(basePath, file.path).replace(/\\/g, '/')}) | ${file.wordCount} 字 | ${file.formattedSize} |\n`;
+    });
+    
+    content += '\n';
   }
   
   // 为每个子目录生成统计信息表格
@@ -415,7 +422,7 @@ function generateNormalReadmeContent(structure, basePath) {
   
   content += `本目录包含 ${fileCount} 个文档文件和 ${dirCount} 个子目录。\n\n`;
   
-  // 如果有文件，生成文件列表表格
+  // 如果有文件，生成文件列表表格（添加文件名、预估字数、大小信息）
   const files = structure.children.filter(item => item.type === 'file');
   if (files.length > 0) {
     content += '## 文件列表\n\n';

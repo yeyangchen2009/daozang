@@ -31,16 +31,18 @@
       padding-top: 0; /* 移除为固定导航栏留出的空间 */
     }
     
-    /* 移除导航栏固定样式 */
-    /* .navbar {
-      position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: white;
-      border-bottom: 1px solid #eee;
-    } */    
+    /* 固定导航栏 */
+    .app-nav {
+    position: fixed !important;
+    top: 0;
+    left: 300px; /* 与侧边栏宽度相同 */
+    right: 0;
+    z-index: 1000;
+    background: white;
+    border-bottom: 1px solid #eee;
+    margin: 0 !important;
+    padding: 10px 20px !important;
+    }   
    .content {
       padding-top: 80px;
     }    
