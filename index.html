@@ -99,6 +99,117 @@
       padding-top: 0;
       margin-top: 0;
     }
+
+	/* 右侧固定导航栏主容器样式 */
+    .fixed-right-nav {
+      position: fixed; /* 固定定位，不随页面滚动 */
+      right: 20px; /* 距离右侧20px */
+      top: 50%; /* 垂直方向居中对齐 */
+      transform: translateY(-50%); /* 精确垂直居中 */
+      z-index: 999; /* 确保在页面最上层显示 */
+    }
+
+    /* 去除列表默认样式 */
+    .fixed-right-nav ul {
+      list-style: none; /* 去除默认列表符号 */
+      padding: 0; /* 去除内边距 */
+      margin: 0; /* 去除外边距 */
+    }
+
+    /* 每个导航项的容器样式 */
+    .fixed-right-nav li {
+      position: relative; /* 相对定位，作为子元素的定位参考 */
+      margin-bottom: 15px; /* 导航项之间的垂直间距 */
+    }
+
+    /* 导航图标按钮样式 */
+    .fixed-right-nav .nav-item {
+      display: block; /* 转为块级元素，方便设置宽高 */
+      width: 40px; /* 按钮宽度 */
+      height: 40px; /* 按钮高度 */
+      padding: 5px; /* 给图标留出空间 */
+      box-sizing: border-box; /* 保证 padding 不撑大盒子 */
+      text-align: center; /* 图标水平居中 */
+      background: transparent; /* 按钮背景色改为透明 */
+      border-radius: 0%; /* 圆形按钮 */
+      text-decoration: none; /* 去除下划线 */
+      transition: all 0.3s; /* 所有属性变化添加过渡动画 */
+    }
+
+    /* 导航图标图片样式 */
+    .fixed-right-nav .nav-icon-img {
+      width: 30px; /* 图标宽度，可根据需求调整 */
+      height: 30px; /* 图标高度，可根据需求调整 */
+      display: block;
+      margin: 0 auto; /* 让图标在按钮内水平居中 */
+    }
+
+    /* 导航文字标签样式 */
+    .fixed-right-nav .nav-label {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+      color: #333;
+      margin-top: 5px;
+    }
+    
+    /* 图片容器样式 (默认隐藏) */
+    .fixed-right-nav .nav-img {
+      position: absolute; /* 绝对定位，相对于父元素li */
+      right: 50px; /* 距离右侧按钮50px */
+      top: 50%; /* 垂直居中对齐 */
+      transform: translateY(-50%); /* 精确垂直居中 */
+      width: 150px; /* 增加宽度以容纳更多内容 */
+      background: rgba(255, 255, 255, 1); /* 白色背景 */
+      border-radius: 8px; /* 圆角 */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 阴影效果 */
+      display: none; /* 默认隐藏 */
+      padding: 15px; /* 内边距 */
+      text-align: center; /* 文字居中 */
+    }
+
+    /* 图片上方文字样式 */
+    .fixed-right-nav .nav-img-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    /* 图片样式 */
+    .fixed-right-nav .nav-img img {
+      width: 120px; /* 图片宽度 */
+      height: 120px; /* 图片高度 */
+      object-fit: cover; /* 保持比例填充容器 */
+      border-radius: 4px; /* 图片圆角 */
+      margin: 0 auto; /* 居中显示 */
+      display: block;
+    }
+
+    /* 图片下方文字样式 */
+    .fixed-right-nav .nav-img-desc {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    /* 鼠标悬停时显示图片 */
+    .fixed-right-nav li:hover .nav-img {
+      display: block; /* 显示图片 */
+    }
+    
+    /* 鼠标悬停时显示图片下方文字 */
+    .fixed-right-nav li:hover .nav-img-label {
+      display: block;
+    }
+    
+    /* 鼠标悬停时按钮变色 */
+    .fixed-right-nav li:hover .nav-item {
+      background: #42b983; /* 使用docsify默认主题色 */
+    }
+   
     
   </style>
 </head>
@@ -109,6 +220,66 @@
       <p>正在准备中华道教经典文献，请稍候...</p>
     </div>
   </div>
+  
+  <!-- 右侧固定导航栏容器 -->
+  <div class="fixed-right-nav">
+    <!-- 导航列表 -->
+    <ul>
+      <!-- 手机看导航项 -->
+      <li>
+        <!-- 导航图标按钮 -->
+        <a href="javascript:void(0)" class="nav-item">
+          <img src="_media/mobile.png" alt="手机看" class="nav-icon-img">
+        </a>
+        <span class="nav-label">手机看</span>
+        <!-- 悬停显示的图片容器 (默认隐藏) -->
+        <div class="nav-img">
+          <div class="nav-img-title">微信扫一扫</div>
+          <img src="_media/sp20251015_162053_296.png" alt="扫描二维码，在手机查看" />
+          <div class="nav-img-desc">可以手机看或分享至朋友圈</div>
+        </div>
+      </li>
+
+      <!-- 交流群导航项 -->
+      <li>
+        <a href="javascript:void(0)" class="nav-item">
+          <img src="_media/weixin.png" alt="联系我" class="nav-icon-img">
+        </a>
+        <span class="nav-label">联系我</span>
+        <div class="nav-img">
+          <div class="nav-img-title"><span style="font-size:0.8rem;font-weight:bold;">扫码添加 <span style="color:red;">站长微信</span>，欢迎沟通交流</span></div>
+          <img src="_media/lxfs.jpg" alt="联系我" />
+        </div>
+      </li>
+
+      <!-- 下资料导航项 -->
+      <li>
+        <a href="javascript:void(0)" class="nav-item">
+          <img src="_media/xiazai.png" alt="公众号" class="nav-icon-img">
+        </a>
+        <span class="nav-label">公众号</span>
+        <div class="nav-img">
+          <div class="nav-img-title"><span style="font-size:0.8rem;font-weight:bold;">扫码关注站长公众号，回复 <span style="color:red;">中医</span> 获取相关资源 </span></div>
+          <img src="_media/gzh.jpg" alt="下载资料二维码" />
+          <div class="nav-img-desc">公众号: 結集歲月</div>
+        </div>
+      </li>
+
+      <!-- 支持我导航项 -->
+      <li>
+        <a href="javascript:void(0)" class="nav-item">
+          <img src="_media/dianzan.png" alt="支持我" class="nav-icon-img">
+        </a>
+        <span class="nav-label">支持我</span>
+        <div class="nav-img">
+          <div class="nav-img-title"><span style="font-size:0.8rem;font-weight:bold;">鼓励和赞赏我</span></div>
+          <img src="_media/sp20251015_170059_491.png" alt="支持二维码" />
+          <div class="nav-img-desc">感谢您的支持，作者头发长长长</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
   
   <!-- 回到顶部按钮 -->
   <button id="back-to-top" title="回到顶部">↑</button>
