@@ -1,400 +1,469 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>道藏 - 中华道教经典数字图书馆</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="道藏 - 中华道教经典数字图书馆，包含正统道藏各部、续道藏、藏外等丰富道教文献">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <!-- 网站图标 -->
-  <link rel="icon" type="image/jpeg" href="_media/favicon.jpg">
-  <link rel="shortcut icon" type="image/jpeg" href="_media/favicon.jpg">
-  <link rel="apple-touch-icon" href="_media/favicon.jpg">
-  <meta name="msapplication-TileImage" content="_media/favicon.jpg">
-  <!-- Docsify 主题样式 -->
-  <link rel="stylesheet" href="lib/pure.css">
-  
-  <!-- 自定义样式 -->
-  <style>
-    .app-name-link img {
-      width: 30px;
-      height: 30px;
-    }
-    
-    /* 固定侧边栏 */
-    .sidebar {
-      border-right: 1px solid #eee;
-      position: fixed !important;
-      top: 0;
-      bottom: 0;
-      overflow-y: auto;
-      padding-top: 0; /* 移除为固定导航栏留出的空间 */
-    }
-    
-    /* 固定导航栏 */
-    .app-nav {
-    position: fixed !important;
-    top: 0;
-    left: 300px; /* 与侧边栏宽度相同 */
-    right: 0;
-    z-index: 1000;
-    background: white;
-    border-bottom: 1px solid #eee;
-    margin: 0 !important;
-    padding: 10px 20px !important;
-    }   
-   .content {
-      padding-top: 80px;
-    }    
-    .cover.show {
-      background: linear-gradient(to left bottom, hsl(118, 100%, 85%) 0%, hsl(181, 100%, 85%) 100%);
-    }
-    .cover-main > p:last-child a {
-      color: #fff;
-      background: rgba(0, 0, 0, 0.1);
-      border: 1px solid #fff;
-    }
-    
-    .cover-main > p:last-child a:hover {
-      background: #fff;
-      color: #42b883;
-    }
-    
-    /* 回到顶部按钮样式 */
-    #back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background-color: #42b883;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      display: none;
-      z-index: 99;
-      font-size: 20px;
-      text-align: center;
-      line-height: 40px;
-    }
-    
-    #back-to-top:hover {
-      background-color: #359c6d;
-    }
-    
-    /* 调整侧边栏搜索框样式 */
-    .sidebar .search {
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 100;
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      margin: 0;
-    }
-    
-    /* 确保侧边栏内容不被搜索框遮挡 */
-    .sidebar-nav {
-      padding-top: 0;
-      margin-top: 0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>道藏 - 中华道教经典数字图书馆</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="description"
+      content="道藏 - 中华道教经典数字图书馆，包含正统道藏各部、续道藏、藏外等丰富道教文献"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+    <!-- 网站图标 -->
+    <link rel="icon" type="image/jpeg" href="_media/favicon.jpg" />
+    <link rel="shortcut icon" type="image/jpeg" href="_media/favicon.jpg" />
+    <link rel="apple-touch-icon" href="_media/favicon.jpg" />
+    <meta name="msapplication-TileImage" content="_media/favicon.jpg" />
+    <!-- Docsify 主题样式 -->
+    <link rel="stylesheet" href="lib/pure.css" />
 
-	/* 右侧固定导航栏主容器样式 */
-    .fixed-right-nav {
-      position: fixed; /* 固定定位，不随页面滚动 */
-      right: 20px; /* 距离右侧20px */
-      top: 50%; /* 垂直方向居中对齐 */
-      transform: translateY(-50%); /* 精确垂直居中 */
-      z-index: 999; /* 确保在页面最上层显示 */
-    }
-
-    /* 去除列表默认样式 */
-    .fixed-right-nav ul {
-      list-style: none; /* 去除默认列表符号 */
-      padding: 0; /* 去除内边距 */
-      margin: 0; /* 去除外边距 */
-    }
-
-    /* 每个导航项的容器样式 */
-    .fixed-right-nav li {
-      position: relative; /* 相对定位，作为子元素的定位参考 */
-      margin-bottom: 15px; /* 导航项之间的垂直间距 */
-    }
-
-    /* 导航图标按钮样式 */
-    .fixed-right-nav .nav-item {
-      display: block; /* 转为块级元素，方便设置宽高 */
-      width: 40px; /* 按钮宽度 */
-      height: 40px; /* 按钮高度 */
-      padding: 5px; /* 给图标留出空间 */
-      box-sizing: border-box; /* 保证 padding 不撑大盒子 */
-      text-align: center; /* 图标水平居中 */
-      background: transparent; /* 按钮背景色改为透明 */
-      border-radius: 0%; /* 圆形按钮 */
-      text-decoration: none; /* 去除下划线 */
-      transition: all 0.3s; /* 所有属性变化添加过渡动画 */
-    }
-
-    /* 导航图标图片样式 */
-    .fixed-right-nav .nav-icon-img {
-      width: 30px; /* 图标宽度，可根据需求调整 */
-      height: 30px; /* 图标高度，可根据需求调整 */
-      display: block;
-      margin: 0 auto; /* 让图标在按钮内水平居中 */
-    }
-
-    /* 导航文字标签样式 */
-    .fixed-right-nav .nav-label {
-      display: block;
-      text-align: center;
-      font-size: 12px;
-      color: #333;
-      margin-top: 5px;
-    }
-    
-    /* 图片容器样式 (默认隐藏) */
-    .fixed-right-nav .nav-img {
-      position: absolute; /* 绝对定位，相对于父元素li */
-      right: 50px; /* 距离右侧按钮50px */
-      top: 50%; /* 垂直居中对齐 */
-      transform: translateY(-50%); /* 精确垂直居中 */
-      width: 150px; /* 增加宽度以容纳更多内容 */
-      background: rgba(255, 255, 255, 1); /* 白色背景 */
-      border-radius: 8px; /* 圆角 */
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 阴影效果 */
-      display: none; /* 默认隐藏 */
-      padding: 15px; /* 内边距 */
-      text-align: center; /* 文字居中 */
-    }
-
-    /* 图片上方文字样式 */
-    .fixed-right-nav .nav-img-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    /* 图片样式 */
-    .fixed-right-nav .nav-img img {
-      width: 120px; /* 图片宽度 */
-      height: 120px; /* 图片高度 */
-      object-fit: cover; /* 保持比例填充容器 */
-      border-radius: 4px; /* 图片圆角 */
-      margin: 0 auto; /* 居中显示 */
-      display: block;
-    }
-
-    /* 图片下方文字样式 */
-    .fixed-right-nav .nav-img-desc {
-      font-size: 12px;
-      color: #666;
-      margin-top: 10px;
-      line-height: 1.4;
-    }
-
-    /* 鼠标悬停时显示图片 */
-    .fixed-right-nav li:hover .nav-img {
-      display: block; /* 显示图片 */
-    }
-    
-    /* 鼠标悬停时显示图片下方文字 */
-    .fixed-right-nav li:hover .nav-img-label {
-      display: block;
-    }
-    
-    /* 鼠标悬停时按钮变色 */
-    .fixed-right-nav li:hover .nav-item {
-      background: #42b983; /* 使用docsify默认主题色 */
-    }
-   
-    
-  </style>
-</head>
-<body>
-  <div id="app">
-    <div style="text-align: center; padding: 50px;">
-      <h1>📚 道藏载入中...</h1>
-      <p>正在准备中华道教经典文献，请稍候...</p>
-    </div>
-  </div>
-  
-  <!-- 右侧固定导航栏容器 -->
-  <div class="fixed-right-nav">
-    <!-- 导航列表 -->
-    <ul>
-      <!-- 手机看导航项 -->
-      <li>
-        <!-- 导航图标按钮 -->
-        <a href="javascript:void(0)" class="nav-item">
-          <img src="_media/mobile.png" alt="手机看" class="nav-icon-img">
-        </a>
-        <span class="nav-label">手机看</span>
-        <!-- 悬停显示的图片容器 (默认隐藏) -->
-        <div class="nav-img">
-          <div class="nav-img-title">微信扫一扫</div>
-          <img src="_media/sp20251015_162053_296.png" alt="扫描二维码，在手机查看" />
-          <div class="nav-img-desc">可以手机看或分享至朋友圈</div>
-        </div>
-      </li>
-
-      <!-- 交流群导航项 -->
-      <li>
-        <a href="javascript:void(0)" class="nav-item">
-          <img src="_media/weixin.png" alt="联系我" class="nav-icon-img">
-        </a>
-        <span class="nav-label">联系我</span>
-        <div class="nav-img">
-          <div class="nav-img-title"><span style="font-size:0.8rem;font-weight:bold;">扫码添加 <span style="color:red;">站长微信</span>，欢迎沟通交流</span></div>
-          <img src="_media/lxfs.jpg" alt="联系我" />
-        </div>
-      </li>
-
-      <!-- 下资料导航项 -->
-      <li>
-        <a href="javascript:void(0)" class="nav-item">
-          <img src="_media/xiazai.png" alt="公众号" class="nav-icon-img">
-        </a>
-        <span class="nav-label">公众号</span>
-        <div class="nav-img">
-          <div class="nav-img-title"><span style="font-size:0.8rem;font-weight:bold;">扫码关注站长公众号，回复 <span style="color:red;">中医</span> 获取相关资源 </span></div>
-          <img src="_media/gzh.jpg" alt="下载资料二维码" />
-          <div class="nav-img-desc">公众号: 結集歲月</div>
-        </div>
-      </li>
-
-      <!-- 支持我导航项 -->
-      <li>
-        <a href="javascript:void(0)" class="nav-item">
-          <img src="_media/dianzan.png" alt="支持我" class="nav-icon-img">
-        </a>
-        <span class="nav-label">支持我</span>
-        <div class="nav-img">
-          <div class="nav-img-title"><span style="font-size:0.8rem;font-weight:bold;">鼓励和赞赏我</span></div>
-          <img src="_media/sp20251015_170059_491.png" alt="支持二维码" />
-          <div class="nav-img-desc">感谢您的支持，作者头发长长长</div>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  
-  <!-- 回到顶部按钮 -->
-  <button id="back-to-top" title="回到顶部">↑</button>
-  
-  <script>
-    // 回到顶部功能
-    window.onscroll = function() {
-      scrollFunction();
-    };
-    
-    function scrollFunction() {
-      const backToTopButton = document.getElementById("back-to-top");
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        backToTopButton.style.display = "block";
-      } else {
-        backToTopButton.style.display = "none";
+    <!-- 自定义样式 -->
+    <style>
+      .app-name-link img {
+        width: 30px;
+        height: 30px;
       }
-    };
-    
-    document.getElementById("back-to-top").addEventListener("click", function() {
-      document.body.scrollTop = 0; // Safari
-      document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
-    });
-    
-    window.$docsify = {
-      el: '#app', /* docsify初始化的挂载元素，默认#app,不存在则挂载在body上 */
-      // 网站名称
-      name: '道藏',
-      // 首页文件
-      homepage: '/README.md',
-      // 最大目录层级
-      maxLevel: 6,
-      // 子目录层级
-      subMaxLevel: 6,
-      // 载入侧边栏
-      loadSidebar: true,
-      // 固定侧边栏
-      sidebarDisplayLevel: 1,
-      // 自动生成侧边栏
-      autoHeader: true,
-      // 载入导航栏
-      loadNavbar: true,
-      // 封面页面
-      coverpage: true,
-      // 首页是否只显示封面
-      onlyCover: true,
-      // 主题颜色
-      themeColor: '#42b883',
-      // 路由模式
-      routerMode: 'hash',
-      // 编码处理
-      charset: 'utf-8',
-      // 别名处理
-      alias: {
-        '/.*/_navbar.md': '/_navbar.md',
-        '/.*/_coverpage.md': '/_coverpage.md'
-      },
-      // 搜索配置
-      search: {
-        maxAge: 86400000, // 过期时间，单位毫秒，一天
-        paths: 'auto',
-        placeholder: '🔍 搜索道教文献...',
-        noData: '😥 找不到结果',
-        depth: 6,
-        hideOtherSidebarContent: false,
-      },
-      // 复制代码配置
-      copyCode: {
-        buttonText: '复制',
-        errorText: '错误',
-        successText: '已复制'
-      },
-      // 分页导航
-      pagination: {
-        previousText: '上一篇',
-        nextText: '下一篇',
-        crossChapter: true,
-        crossChapterText: true,
-        crossChapterAnchor: true
-      },
-      // 自定义插件
-      plugins: [
-        // 编辑按钮和页脚插件
-        function (hook, vm) {
-          hook.afterEach(function (html) {
-            var footer = 
-              '<div style="text-align: center; padding: 20px; color: #666; border-top: 1px solid #eee; margin-top: 40px;">\n' +
-              '<p>📚 <strong>道藏 - 中华道教经典数字图书馆</strong> | 🕉 <em>传承道教文化，弘扬道家智慧</em></p>\n' +
-              '<p style="font-size: 0.9em;">最后更新: ' + new Date().toLocaleDateString('zh-CN') + 
-              ' | <a href="https://github.com/yeyangchen2009" target="_blank">GitHub</a>' +
-              ' | <a href="#/guide">使用指南</a></p>\n' +
-              '</div>';
-            return html + footer;
-          });
+
+      /* 固定侧边栏 */
+      .sidebar {
+        border-right: 1px solid #eee;
+        position: fixed !important;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        padding-top: 0; /* 移除为固定导航栏留出的空间 */
+      }
+
+      /* 固定导航栏 */
+      .app-nav {
+        position: fixed !important;
+        top: 0;
+        left: 300px; /* 与侧边栏宽度相同 */
+        right: 0;
+        z-index: 1000;
+        background: white;
+        border-bottom: 1px solid #eee;
+        margin: 0 !important;
+        padding: 10px 20px !important;
+      }
+      .content {
+        padding-top: 80px;
+      }
+      .cover.show {
+        background: linear-gradient(
+          to left bottom,
+          hsl(118, 100%, 85%) 0%,
+          hsl(181, 100%, 85%) 100%
+        );
+      }
+      .cover-main > p:last-child a {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.1);
+        border: 1px solid #fff;
+      }
+
+      .cover-main > p:last-child a:hover {
+        background: #fff;
+        color: #42b883;
+      }
+
+      /* 回到顶部按钮样式 */
+      #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: #42b883;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: none;
+        z-index: 99;
+        font-size: 20px;
+        text-align: center;
+        line-height: 40px;
+      }
+
+      #back-to-top:hover {
+        background-color: #359c6d;
+      }
+
+      /* 调整侧边栏搜索框样式 */
+      .sidebar .search {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 100;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        margin: 0;
+      }
+
+      /* 确保侧边栏内容不被搜索框遮挡 */
+      .sidebar-nav {
+        padding-top: 0;
+        margin-top: 0;
+      }
+
+      /* 右侧固定导航栏主容器样式 */
+      .fixed-right-nav {
+        position: fixed; /* 固定定位，不随页面滚动 */
+        right: 20px; /* 距离右侧20px */
+        top: 50%; /* 垂直方向居中对齐 */
+        transform: translateY(-50%); /* 精确垂直居中 */
+        z-index: 999; /* 确保在页面最上层显示 */
+      }
+
+      /* 去除列表默认样式 */
+      .fixed-right-nav ul {
+        list-style: none; /* 去除默认列表符号 */
+        padding: 0; /* 去除内边距 */
+        margin: 0; /* 去除外边距 */
+      }
+
+      /* 每个导航项的容器样式 */
+      .fixed-right-nav li {
+        position: relative; /* 相对定位，作为子元素的定位参考 */
+        margin-bottom: 15px; /* 导航项之间的垂直间距 */
+      }
+
+      /* 导航图标按钮样式 */
+      .fixed-right-nav .nav-item {
+        display: block; /* 转为块级元素，方便设置宽高 */
+        width: 40px; /* 按钮宽度 */
+        height: 40px; /* 按钮高度 */
+        padding: 5px; /* 给图标留出空间 */
+        box-sizing: border-box; /* 保证 padding 不撑大盒子 */
+        text-align: center; /* 图标水平居中 */
+        background: transparent; /* 按钮背景色改为透明 */
+        border-radius: 0%; /* 圆形按钮 */
+        text-decoration: none; /* 去除下划线 */
+        transition: all 0.3s; /* 所有属性变化添加过渡动画 */
+      }
+
+      /* 导航图标图片样式 */
+      .fixed-right-nav .nav-icon-img {
+        width: 30px; /* 图标宽度，可根据需求调整 */
+        height: 30px; /* 图标高度，可根据需求调整 */
+        display: block;
+        margin: 0 auto; /* 让图标在按钮内水平居中 */
+      }
+
+      /* 导航文字标签样式 */
+      .fixed-right-nav .nav-label {
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        color: #333;
+        margin-top: 5px;
+      }
+
+      /* 图片容器样式 (默认隐藏) */
+      .fixed-right-nav .nav-img {
+        position: absolute; /* 绝对定位，相对于父元素li */
+        right: 50px; /* 距离右侧按钮50px */
+        top: 50%; /* 垂直居中对齐 */
+        transform: translateY(-50%); /* 精确垂直居中 */
+        width: 150px; /* 增加宽度以容纳更多内容 */
+        background: rgba(255, 255, 255, 1); /* 白色背景 */
+        border-radius: 8px; /* 圆角 */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 阴影效果 */
+        display: none; /* 默认隐藏 */
+        padding: 15px; /* 内边距 */
+        text-align: center; /* 文字居中 */
+      }
+
+      /* 图片上方文字样式 */
+      .fixed-right-nav .nav-img-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+
+      /* 图片样式 */
+      .fixed-right-nav .nav-img img {
+        width: 120px; /* 图片宽度 */
+        height: 120px; /* 图片高度 */
+        object-fit: cover; /* 保持比例填充容器 */
+        border-radius: 4px; /* 图片圆角 */
+        margin: 0 auto; /* 居中显示 */
+        display: block;
+      }
+
+      /* 图片下方文字样式 */
+      .fixed-right-nav .nav-img-desc {
+        font-size: 12px;
+        color: #666;
+        margin-top: 10px;
+        line-height: 1.4;
+      }
+
+      /* 鼠标悬停时显示图片 */
+      .fixed-right-nav li:hover .nav-img {
+        display: block; /* 显示图片 */
+      }
+
+      /* 鼠标悬停时显示图片下方文字 */
+      .fixed-right-nav li:hover .nav-img-label {
+        display: block;
+      }
+
+      /* 鼠标悬停时按钮变色 */
+      .fixed-right-nav li:hover .nav-item {
+        background: #42b983; /* 使用docsify默认主题色 */
+      }
+
+      /* 
+      响应式布局设置 - 针对手机端
+      当屏幕宽度小于768px时应用以下样式
+    */
+      @media (max-width: 768px) {
+        /* 1. 手机端隐藏顶部导航栏 */
+        .app-nav {
+          display: none !important; /* !important确保优先级最高 */
         }
-      ]
-    }
-  </script>
-  
-  <!-- Docsify 核心文件 -->
-  <script src="lib/docsify@4.js"></script>
-  
-  <!-- 搜索插件 -->
-  <script src="lib/search.min.js"></script>
-  
-  <!-- 复制代码插件 -->
-  <script src="lib/docsify-copy-code@2.js"></script>
-  
-  <!-- 分页插件 -->
-  <script src="lib/docsify-pagination.min.js"></script>
-  
-  <!-- 缩放图片插件 -->
-  <script src="lib/zoom-image.min.js"></script>
-  
-  <!-- Emoji 插件 -->
-  <script src="lib/emoji.min.js"></script>
-</body>
+
+        /* 2. 调整内容区域顶部内边距（因为顶部导航栏已隐藏） */
+        .content {
+          padding-top: 20px !important; /* 减少顶部留白 */
+        }
+
+        /* 3.移动端隐藏"手机看"导航项 */
+        .fixed-right-nav li:first-child {
+          display: none;
+        }
+
+        /* 4. 优化右侧导航栏在手机端的显示 */
+        .fixed-right-nav {
+          right: 9px;
+          top: 40%; /* 从50%改为40%，向上移动 */
+          transform: translateY(-50%);
+        }
+
+        /* 5. 调整右侧导航图标大小，适应手机屏幕 */
+        .fixed-right-nav .nav-item {
+          width: 36px;
+          height: 36px;
+        }
+
+        .fixed-right-nav .nav-icon-img {
+          width: 26px;
+          height: 26px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div style="text-align: center; padding: 50px">
+        <h1>📚 道藏载入中...</h1>
+        <p>正在准备中华道教经典文献，请稍候...</p>
+      </div>
+    </div>
+
+    <!-- 右侧固定导航栏容器 -->
+    <div class="fixed-right-nav">
+      <!-- 导航列表 -->
+      <ul>
+        <!-- 手机看导航项 -->
+        <li>
+          <!-- 导航图标按钮 -->
+          <a href="javascript:void(0)" class="nav-item">
+            <img src="_media/mobile.png" alt="手机看" class="nav-icon-img" />
+          </a>
+          <span class="nav-label">手机看</span>
+          <!-- 悬停显示的图片容器 (默认隐藏) -->
+          <div class="nav-img">
+            <div class="nav-img-title">微信扫一扫</div>
+            <img
+              src="_media/sp20251015_162053_296.png"
+              alt="扫描二维码，在手机查看"
+            />
+            <div class="nav-img-desc">可以手机看或分享至朋友圈</div>
+          </div>
+        </li>
+
+        <!-- 联系我导航项 -->
+        <li>
+          <a href="javascript:void(0)" class="nav-item">
+            <img src="_media/weixin.png" alt="联系我" class="nav-icon-img" />
+          </a>
+          <span class="nav-label">联系我</span>
+          <div class="nav-img">
+            <div class="nav-img-title">
+              <span style="font-size: 0.8rem; font-weight: bold"
+                >扫码添加
+                <span style="color: red">站长微信</span>，欢迎沟通交流</span
+              >
+            </div>
+            <img src="_media/lxfs.jpg" alt="联系我" />
+          </div>
+        </li>
+
+        <!-- 公众号导航项 -->
+        <li>
+          <a href="javascript:void(0)" class="nav-item">
+            <img src="_media/xiazai.png" alt="公众号" class="nav-icon-img" />
+          </a>
+          <span class="nav-label">公众号</span>
+          <div class="nav-img">
+            <div class="nav-img-title">
+              <span style="font-size: 0.8rem; font-weight: bold"
+                >扫码关注站长公众号，回复
+                <span style="color: red">中医</span> 获取相关资源
+              </span>
+            </div>
+            <img src="_media/gzh.jpg" alt="下载资料二维码" />
+            <div class="nav-img-desc">公众号: 結集歲月</div>
+          </div>
+        </li>
+
+        <!-- 支持我导航项 -->
+        <li>
+          <a href="javascript:void(0)" class="nav-item">
+            <img src="_media/dianzan.png" alt="支持我" class="nav-icon-img" />
+          </a>
+          <span class="nav-label">支持我</span>
+          <div class="nav-img">
+            <div class="nav-img-title">
+              <span style="font-size: 0.8rem; font-weight: bold"
+                >鼓励和赞赏我</span
+              >
+            </div>
+            <img src="_media/sp20251015_170059_491.png" alt="支持二维码" />
+            <div class="nav-img-desc">感谢您的支持，作者头发长长长</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" title="回到顶部">↑</button>
+
+    <script>
+      // 回到顶部功能
+      window.onscroll = function () {
+        scrollFunction();
+      };
+
+      function scrollFunction() {
+        const backToTopButton = document.getElementById("back-to-top");
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
+          backToTopButton.style.display = "block";
+        } else {
+          backToTopButton.style.display = "none";
+        }
+      }
+
+      document
+        .getElementById("back-to-top")
+        .addEventListener("click", function () {
+          document.body.scrollTop = 0; // Safari
+          document.documentElement.scrollTop = 0; // Chrome, Firefox, IE and Opera
+        });
+
+      window.$docsify = {
+        el: "#app" /* docsify初始化的挂载元素，默认#app,不存在则挂载在body上 */,
+        // 网站名称
+        name: "道藏",
+        // 首页文件
+        homepage: "/README.md",
+        // 最大目录层级
+        maxLevel: 6,
+        // 子目录层级
+        subMaxLevel: 6,
+        // 载入侧边栏
+        loadSidebar: true,
+        // 固定侧边栏
+        sidebarDisplayLevel: 1,
+        // 自动生成侧边栏
+        autoHeader: true,
+        // 载入导航栏
+        loadNavbar: true,
+        // 封面页面
+        coverpage: true,
+        // 首页是否只显示封面
+        onlyCover: true,
+        // 主题颜色
+        themeColor: "#42b883",
+        // 路由模式
+        routerMode: "hash",
+        // 编码处理
+        charset: "utf-8",
+        // 别名处理
+        alias: {
+          "/.*/_navbar.md": "/_navbar.md",
+          "/.*/_coverpage.md": "/_coverpage.md",
+        },
+        // 搜索配置
+        search: {
+          maxAge: 86400000, // 过期时间，单位毫秒，一天
+          paths: "auto",
+          placeholder: "🔍 搜索道教文献...",
+          noData: "😥 找不到结果",
+          depth: 6,
+          hideOtherSidebarContent: false,
+        },
+        // 复制代码配置
+        copyCode: {
+          buttonText: "复制",
+          errorText: "错误",
+          successText: "已复制",
+        },
+        // 分页导航
+        pagination: {
+          previousText: "上一篇",
+          nextText: "下一篇",
+          crossChapter: true,
+          crossChapterText: true,
+          crossChapterAnchor: true,
+        },
+        // 自定义插件
+        plugins: [
+          // 编辑按钮和页脚插件
+          function (hook, vm) {
+            hook.afterEach(function (html) {
+              var footer =
+                '<div style="text-align: center; padding: 20px; color: #666; border-top: 1px solid #eee; margin-top: 40px;">\n' +
+                "<p>📚 <strong>道藏 - 中华道教经典数字图书馆</strong> | 🕉 <em>传承道教文化，弘扬道家智慧</em></p>\n" +
+                '<p style="font-size: 0.9em;">最后更新: ' +
+                new Date().toLocaleDateString("zh-CN") +
+                ' | <a href="https://github.com/yeyangchen2009" target="_blank">GitHub</a>' +
+                ' | <a href="#/guide">使用指南</a></p>\n' +
+                "</div>";
+              return html + footer;
+            });
+          },
+        ],
+      };
+    </script>
+
+    <!-- Docsify 核心文件 -->
+    <script src="lib/docsify@4.js"></script>
+
+    <!-- 搜索插件 -->
+    <script src="lib/search.min.js"></script>
+
+    <!-- 复制代码插件 -->
+    <script src="lib/docsify-copy-code@2.js"></script>
+
+    <!-- 分页插件 -->
+    <script src="lib/docsify-pagination.min.js"></script>
+
+    <!-- 缩放图片插件 -->
+    <script src="lib/zoom-image.min.js"></script>
+
+    <!-- Emoji 插件 -->
+    <script src="lib/emoji.min.js"></script>
+  </body>
 </html>

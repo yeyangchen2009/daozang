@@ -1,6 +1,7 @@
 - [首页](/)
 
 - [道藏分类](/README.md)
+
   - [总览](/道藏/)
   - [正统道藏太平部](/道藏/正统道藏太平部/)
   - [正统道藏太清部](/道藏/正统道藏太清部/)
@@ -12,20 +13,125 @@
   - [正统道藏续道藏](/道藏/正统道藏续道藏/)
   - [藏外](/道藏/藏外/)
 
+- [佛藏](/十藏/佛藏/)
+
+  - [乾隆藏](https://shizang.netlify.app/#/十藏/佛藏/乾隆藏/README.md)
+  - [嘉兴藏](https://shizang.netlify.app/#/十藏/佛藏/嘉兴藏/README.md)
+  - [大藏经](https://shizang.netlify.app/#/十藏/佛藏/大藏经/README.md)
+  - [续藏经](https://shizang.netlify.app/#/十藏/佛藏/续藏经/README.md)
+  - [藏外](https://shizang.netlify.app/#/十藏/佛藏/藏外/README.md)
+
+- [道藏](/十藏/道藏/)
+
+  - [正统道藏太平部](https://shizang.netlify.app/#/十藏/道藏/正统道藏太平部/README.md)
+  - [正统道藏太清部](https://shizang.netlify.app/#/十藏/道藏/正统道藏太清部/README.md)
+  - [正统道藏太玄部](https://shizang.netlify.app/#/十藏/道藏/正统道藏太玄部/README.md)
+  - [正统道藏正一部](https://shizang.netlify.app/#/十藏/道藏/正统道藏正一部/README.md)
+  - [正统道藏洞玄部](https://shizang.netlify.app/#/十藏/道藏/正统道藏洞玄部/README.md)
+  - [正统道藏洞真部](https://shizang.netlify.app/#/十藏/道藏/正统道藏洞真部/README.md)
+  - [正统道藏洞神部](https://shizang.netlify.app/#/十藏/道藏/正统道藏洞神部/README.md)
+  - [正统道藏续道藏](https://shizang.netlify.app/#/十藏/道藏/正统道藏续道藏/README.md)
+  - [藏外](https://shizang.netlify.app/#/十藏/道藏/藏外/README.md)
+
+- [医藏](/十藏/医藏/)
+
+  - [内外妇儿](https://shizang.netlify.app/#/十藏/医藏/内外妇儿/README.md)
+  - [医案医话](https://shizang.netlify.app/#/十藏/医藏/医案医话/README.md)
+  - [医经](https://shizang.netlify.app/#/十藏/医藏/医经/README.md)
+  - [古今图书集成博物汇编艺术典医部全录](https://shizang.netlify.app/#/十藏/医藏/古今图书集成博物汇编艺术典医部全录/README.md)
+  - [各类医籍](https://shizang.netlify.app/#/十藏/医藏/各类医籍/README.md)
+  - [四诊脉诀](https://shizang.netlify.app/#/十藏/医藏/四诊脉诀/README.md)
+  - [方剂](https://shizang.netlify.app/#/十藏/医藏/方剂/README.md)
+  - [本草](https://shizang.netlify.app/#/十藏/医藏/本草/README.md)
+  - [针灸](https://shizang.netlify.app/#/十藏/医藏/针灸/README.md)
+
+- [易藏](/十藏/易藏/)
+
+  - [易经](https://shizang.netlify.app/#/十藏/易藏/易经/README.md)
+  - [术数](https://shizang.netlify.app/#/十藏/易藏/术数/README.md)
+
+- [儒藏](/十藏/儒藏/)
+
+  - [乐经](https://shizang.netlify.app/#/十藏/儒藏/乐经/README.md)
+  - [五经总义](https://shizang.netlify.app/#/十藏/儒藏/五经总义/README.md)
+  - [修身治家](https://shizang.netlify.app/#/十藏/儒藏/修身治家/README.md)
+  - [启蒙蒙学](https://shizang.netlify.app/#/十藏/儒藏/启蒙蒙学/README.md)
+  - [四书](https://shizang.netlify.app/#/十藏/儒藏/四书/README.md)
+  - [孝经](https://shizang.netlify.app/#/十藏/儒藏/孝经/README.md)
+  - [小学](https://shizang.netlify.app/#/十藏/儒藏/小学/README.md)
+  - [尚书](https://shizang.netlify.app/#/十藏/儒藏/尚书/README.md)
+  - [春秋](https://shizang.netlify.app/#/十藏/儒藏/春秋/README.md)
+  - [礼经](https://shizang.netlify.app/#/十藏/儒藏/礼经/README.md)
+  - [诗经](https://shizang.netlify.app/#/十藏/儒藏/诗经/README.md)
+  - [语录](https://shizang.netlify.app/#/十藏/儒藏/语录/README.md)
+
+- [史藏](/十藏/史藏/)
+
+  - [传记](https://shizang.netlify.app/#/十藏/史藏/传记/README.md)
+  - [别史](https://shizang.netlify.app/#/十藏/史藏/别史/README.md)
+  - [史评](https://shizang.netlify.app/#/十藏/史藏/史评/README.md)
+  - [地理](https://shizang.netlify.app/#/十藏/史藏/地理/README.md)
+  - [志存记录](https://shizang.netlify.app/#/十藏/史藏/志存记录/README.md)
+  - [政书](https://shizang.netlify.app/#/十藏/史藏/政书/README.md)
+  - [正史](https://shizang.netlify.app/#/十藏/史藏/正史/README.md)
+  - [目录](https://shizang.netlify.app/#/十藏/史藏/目录/README.md)
+  - [纪事本末](https://shizang.netlify.app/#/十藏/史藏/纪事本末/README.md)
+  - [经世文编](https://shizang.netlify.app/#/十藏/史藏/经世文编/README.md)
+  - [编年](https://shizang.netlify.app/#/十藏/史藏/编年/README.md)
+  - [职官](https://shizang.netlify.app/#/十藏/史藏/职官/README.md)
+  - [诏令奏议](https://shizang.netlify.app/#/十藏/史藏/诏令奏议/README.md)
+  - [载记](https://shizang.netlify.app/#/十藏/史藏/载记/README.md)
+
+- [子藏](/十藏/子藏/)
+
+  - [兵家](https://shizang.netlify.app/#/十藏/子藏/兵家/README.md)
+  - [农家](https://shizang.netlify.app/#/十藏/子藏/农家/README.md)
+  - [法家](https://shizang.netlify.app/#/十藏/子藏/法家/README.md)
+  - [笔记](https://shizang.netlify.app/#/十藏/子藏/笔记/README.md)
+  - [算法](https://shizang.netlify.app/#/十藏/子藏/算法/README.md)
+  - [类书](https://shizang.netlify.app/#/十藏/子藏/类书/README.md)
+  - [诸子](https://shizang.netlify.app/#/十藏/子藏/诸子/README.md)
+
+- [集藏](/十藏/集藏/)
+
+  - [四库别集](https://shizang.netlify.app/#/十藏/集藏/四库别集/README.md)
+  - [宝卷](https://shizang.netlify.app/#/十藏/集藏/宝卷/README.md)
+  - [小说](https://shizang.netlify.app/#/十藏/集藏/小说/README.md)
+  - [文总集](https://shizang.netlify.app/#/十藏/集藏/文总集/README.md)
+  - [文评](https://shizang.netlify.app/#/十藏/集藏/文评/README.md)
+  - [演义](https://shizang.netlify.app/#/十藏/集藏/演义/README.md)
+  - [笑话](https://shizang.netlify.app/#/十藏/集藏/笑话/README.md)
+  - [话本](https://shizang.netlify.app/#/十藏/集藏/话本/README.md)
+  - [谜语](https://shizang.netlify.app/#/十藏/集藏/谜语/README.md)
+
+- [诗藏](/十藏/诗藏/)
+
+  - [剧曲](https://shizang.netlify.app/#/十藏/诗藏/剧曲/README.md)
+  - [对联](https://shizang.netlify.app/#/十藏/诗藏/对联/README.md)
+  - [楚辞](https://shizang.netlify.app/#/十藏/诗藏/楚辞/README.md)
+  - [汉赋](https://shizang.netlify.app/#/十藏/诗藏/汉赋/README.md)
+  - [词话](https://shizang.netlify.app/#/十藏/诗藏/词话/README.md)
+  - [词集](https://shizang.netlify.app/#/十藏/诗藏/词集/README.md)
+  - [诗话](https://shizang.netlify.app/#/十藏/诗藏/诗话/README.md)
+  - [诗集](https://shizang.netlify.app/#/十藏/诗藏/诗集/README.md)
+
+- [艺藏](/十藏/艺藏/)
+
+  - [书法](https://shizang.netlify.app/#/十藏/艺藏/书法/README.md)
+  - [器物](https://shizang.netlify.app/#/十藏/艺藏/器物/README.md)
+  - [工艺](https://shizang.netlify.app/#/十藏/艺藏/工艺/README.md)
+  - [棋技](https://shizang.netlify.app/#/十藏/艺藏/棋技/README.md)
+  - [武术](https://shizang.netlify.app/#/十藏/艺藏/武术/README.md)
+  - [竞技](https://shizang.netlify.app/#/十藏/艺藏/竞技/README.md)
+  - [篆刻](https://shizang.netlify.app/#/十藏/艺藏/篆刻/README.md)
+  - [绘画](https://shizang.netlify.app/#/十藏/艺藏/绘画/README.md)
+  - [综合](https://shizang.netlify.app/#/十藏/艺藏/综合/README.md)
+  - [草木鸟兽虫鱼](https://shizang.netlify.app/#/十藏/艺藏/草木鸟兽虫鱼/README.md)
+  - [音乐](https://shizang.netlify.app/#/十藏/艺藏/音乐/README.md)
+  - [饮馔](https://shizang.netlify.app/#/十藏/艺藏/饮馔/README.md)
+
 - 工具
-  - [💾 下載離線版](https://github.com/yeyangchen2009/daozang)
+
   - [📖 使用指南](guide.md)
   - [📞 GitHub](https://github.com/yeyangchen2009)
-
-- **十藏**
-  - [佛藏](https://yeyangchen2009.github.io/fozang)
-  - [道藏](https://yeyangchen2009.github.io/daozang)
-  - [易藏](https://yeyangchen2009.github.io/yizang)
-  - [医藏](https://yeyangchen2009.github.io/medicalzang)
-  - [儒藏](https://yeyangchen2009.github.io/ruzang)
-  - [史藏](https://yeyangchen2009.github.io/shizang)
-  - [子藏](https://yeyangchen2009.github.io/zizang)
-  - [集藏](https://yeyangchen2009.github.io/jizang)
-  - [诗藏](https://yeyangchen2009.github.io/poemzang)
-  - [艺藏](https://yeyangchen2009.github.io/artzang)
-
+  - [关于我](/YeYang.md)
