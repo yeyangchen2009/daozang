@@ -49,6 +49,14 @@
         margin: 0 !important;
         padding: 10px 20px !important;
       }
+
+      /* 当侧边栏收起时，导航栏延伸到左侧 */
+      body.close .app-nav {
+        left: 0;
+        width: 100%;
+        display: block !important; /* 覆盖pure.css中的display: none */
+      }
+      
       .content {
         padding-top: 80px;
       }
